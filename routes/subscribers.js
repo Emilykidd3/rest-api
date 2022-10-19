@@ -1,9 +1,15 @@
 const express = require('express')
 const router = express.Router()
+const subscriber = require('../models/subscriber')
 
 // getting all 
-router.get('/', (req, res) => {
-    res.send('hello world')
+router.get('/', async (req, res) => {
+    try {
+        const subscribers = await subscriber.find()
+        res.json(subscribers)
+    } catch(err) {
+        res.stats(500).json({ message: err.message })
+    }
 })
 
 // getting one
@@ -12,8 +18,11 @@ router.get('/:id', (req, res) => {
 })
 
 // creating one
-router.post('/', (req, res) => {
-
+router.post('/', async (req, res) => {
+    const subscriber = new Subscriber({
+        name: req.body.name,
+        subscribedToChannel: req.body.subscribedToChannel
+    })
 })
 
 // updating one
