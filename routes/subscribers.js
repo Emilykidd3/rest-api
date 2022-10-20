@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const subscriber = require('../models/subscriber')
+const Subscriber = require('../models/subscriber')
 
 // getting all 
 router.get('/', async (req, res) => {
@@ -23,6 +23,12 @@ router.post('/', async (req, res) => {
         name: req.body.name,
         subscribedToChannel: req.body.subscribedToChannel
     })
+    try {
+        const newSubscriber = await subscriber.save()
+        res.status(201).json(newSubscriber)
+    } catch (err) {
+        res.status(400).json({ message: err.message})
+    }
 })
 
 // updating one
