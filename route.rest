@@ -14,3 +14,11 @@ Content-Type: application/json
     "name": "Emily",
     "subscribedToChannel": "channel"
 }
+
+###
+DELETE http://localhost:3000/subscribers/63544ad37ab75cc5f800d8da
+
+
+###
+
+PATCH http://localhost:3000/subscribers/63544ad37ab75cc5f800d8da
