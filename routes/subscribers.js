@@ -5,16 +5,16 @@ const Subscriber = require('../models/subscriber')
 // getting all 
 router.get('/', async (req, res) => {
     try {
-        const subscribers = await subscriber.find()
+        const subscribers = await Subscriber.find()
         res.json(subscribers)
     } catch(err) {
-        res.stats(500).json({ message: err.message })
+        res.status(500).json({ message: err.message })
     }
 })
 
 // getting one
-router.get('/:id', (req, res) => {
-    res.send(req.params.id)
+router.get('/:id', getSubscriber, (req, res) => {
+    res.send(res.subscriber)
 })
 
 // creating one
@@ -32,19 +32,24 @@ router.post('/', async (req, res) => {
 })
 
 // updating one
-router.patch('/:id', (req, res) => {
+router.patch('/:id', getSubscriber, (req, res) => {
 
 })
 
 // deleting one
-router.delete('/:id', (req, res) => {
-    
+router.delete('/:id', getSubscriber, async (req, res) => {
+    try {
+        await res.subscriber.remove()
+        res.json({ message: 'deleted subscriber'})
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
 })
 
 async function getSubscriber(req, res, next) {
     let subscriber
     try{
-        subscriber = await Subscriber.findById(req.rarams.id)
+        subscriber = await Subscriber.findById(req.params.id)
         if (subscriber === null) {
             return res.status(404).json({ message: 'Cannot find subscriber'})
         }
