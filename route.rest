@@ -21,4 +21,9 @@ DELETE http://localhost:3000/subscribers/63544ad37ab75cc5f800d8da
 
 ###
 
-PATCH http://localhost:3000/subscribers/63544ad37ab75cc5f800d8da
+PATCH http://localhost:3000/subscribers/6350d6e92cf6fafd180a9696
+Content-Type: application/json
+
+{
+    "name": "New Name"
+}
